@@ -18,6 +18,7 @@
 </template>
 
 <script>
+	import qs from 'qs'
 	export default {
 		data() {
 			return {
@@ -29,9 +30,20 @@
 		},
 		methods:{
 			goHome(){
-				this.$router.push({
-					path:'/home'
+				this.http.post('http://localhost/dudu_bus/login.php',qs.stringify({
+					username:this.formLabelAlign.name,
+					password:this.formLabelAlign.password
+				})).then(res=>{
+					if(res.data == 1){
+						this.$router.push({
+							path:'/home'
+						})
+					}else{
+						alert('账号或密码错误');
+						this.formLabelAlign = {}
+					}
 				})
+				
 			}
 		}
 	}
